@@ -30,9 +30,13 @@ http://docs.micropython.org/en/latest/esp8266/esp8266/tutorial/intro.html
 
 ### Uploading scripts
 
+Run the following commands to upload the scripts from this repository to your MicroPython board:
+
 ```bash
+# modify the path to the USB serial port if necessary
 export AMPY_PORT=/dev/ttyUSB0
 ampy put sht30.py
+ampy put bmp180.py
 ```
 
 ### Testing parts
@@ -43,6 +47,13 @@ ampy put sht30.py
 ampy run test_sht30.py
 ```
 
+#### Testing BMP180
+
+```bash
+ampy run test_bmp180.py
+```
+
 ## Acknowledgements
 
 * sht30.py is taken from here: https://github.com/rsc1975/micropython-sht30
+* bmp180.py is taken from here: https://github.com/micropython-IMU/micropython-bmp180
