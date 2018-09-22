@@ -39,6 +39,9 @@ export AMPY_PORT=/dev/ttyUSB0
 ampy put sht30.py
 ampy put bmp180.py
 ampy put config.py
+ampy put logstash.py
+ampy put wlan.py
+ampy put main.py
 ```
 
 ### Testing parts
