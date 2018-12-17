@@ -7,7 +7,7 @@ from sht30 import SHT30
 from wlan import do_connect
 
 SEND_INTERVAL_SECONDS = 10
-device_id = esp.flash_id()
+device_id = 'mp-' + str(esp.flash_id())
 
 sensor = ""
 
