@@ -1,13 +1,18 @@
 import esp
 import utime
 
+import config
 from config import WLAN_SSID, WLAN_PASSWORD, LOGSTASH_URL
 from logstash import send_data_to_logstash
 from sht30 import SHT30
 from wlan import do_connect
 
 SEND_INTERVAL_SECONDS = 10
-device_id = 'mp-' + str(esp.flash_id())
+
+if hasattr(config, 'DEVICE_ID'):
+    device_id = config.DEVICE_ID
+else:
+    device_id = 'mp-' + str(esp.flash_id())
 
 sensor = ""
 
