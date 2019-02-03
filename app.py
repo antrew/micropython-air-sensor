@@ -3,6 +3,7 @@ import utime
 
 import config
 from config import WLAN_SSID, WLAN_PASSWORD, LOGSTASH_URL
+from display import Display
 from logstash import send_data_to_logstash
 from sht30 import SHT30
 from wlan import do_connect
@@ -15,6 +16,8 @@ else:
     device_id = 'mp-' + str(esp.flash_id())
 
 sensor = ""
+
+display = Display()
 
 
 def setup():
@@ -30,10 +33,19 @@ def loop():
         'temperature': temperature,
         'humidity': humidity
     }
+    display.refresh(temperature, humidity)
     send_data_to_logstash(LOGSTASH_URL, data)
-    utime.sleep(SEND_INTERVAL_SECONDS)
+
 
 def run():
     setup()
     while True:
         loop()
+        utime.sleep(SEND_INTERVAL_SECONDS)
+
+
+if __name__ == '__main__':
+    print('running once')
+    # run once
+    setup()
+    loop()
