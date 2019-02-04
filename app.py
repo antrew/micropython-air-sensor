@@ -6,7 +6,7 @@ from config import WLAN_SSID, WLAN_PASSWORD, LOGSTASH_URL
 from display import Display
 from logstash import send_data_to_logstash
 from sht30 import SHT30
-from wlan import do_connect
+from wlan import do_connect, disable_access_point
 
 SEND_INTERVAL_SECONDS = 10
 
@@ -21,6 +21,7 @@ display = Display()
 
 
 def setup():
+    disable_access_point()
     do_connect(WLAN_SSID, WLAN_PASSWORD)
     global sensor
     sensor = SHT30()
