@@ -1,4 +1,5 @@
 import esp
+import ntptime
 import utime
 
 import config
@@ -24,6 +25,8 @@ class App:
         disable_access_point()
         do_connect(WLAN_SSID, WLAN_PASSWORD)
 
+        self.ntptimeWhenZero = 0
+
     def loop(self):
         temperature, humidity = self.sensor.measure()
         data = {
@@ -31,6 +34,11 @@ class App:
             'temperature': temperature,
             'humidity': humidity
         }
+        if self.ntptimeWhenZero <= 0:
+            ntptime.settime()
+            self.ntptimeWhenZero = 10
+        self.ntptimeWhenZero -= 1
+
         self.display.refresh(temperature, humidity)
         send_data_to_logstash(LOGSTASH_URL, data)
 
