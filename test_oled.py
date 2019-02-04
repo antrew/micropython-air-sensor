@@ -9,6 +9,9 @@ print(i2c.scan())
 
 display = ssd1306.SSD1306_I2C(64, 48, i2c, addr=0x3c)
 
+# [60, 69, 119]
+# 60 == 0x3c == display
+
 display.fill(0)
 
 import ntptime
