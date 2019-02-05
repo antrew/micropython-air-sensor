@@ -7,15 +7,21 @@ from config import WLAN_SSID, WLAN_PASSWORD, LOGSTASH_URL
 from logstash import send_data_to_logstash
 from wlan import do_connect, disable_access_point
 
+DEFAULT_SEND_INTERVAL_SECONDS = 60
+
 
 class App:
     def __init__(self):
-        self.SEND_INTERVAL_SECONDS = 10
 
         if hasattr(config, 'DEVICE_ID'):
             self.device_id = config.DEVICE_ID
         else:
             self.device_id = 'mp-' + str(esp.flash_id())
+
+        if hasattr(config, 'SEND_INTERVAL_SECONDS'):
+            self.sendIntervalSeconds = config.SEND_INTERVAL_SECONDS
+        else:
+            self.sendIntervalSeconds = DEFAULT_SEND_INTERVAL_SECONDS
 
         try:
             from display import Display
@@ -65,7 +71,7 @@ class App:
     def run(self):
         while True:
             self.loop()
-            utime.sleep(self.SEND_INTERVAL_SECONDS)
+            utime.sleep(self.sendIntervalSeconds)
 
 
 if __name__ == '__main__':
