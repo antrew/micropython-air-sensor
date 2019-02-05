@@ -29,6 +29,12 @@ class App:
         except ImportError:
             self.sensor = None
 
+        try:
+            from moisture import SoilMoistureSensor
+            self.soilMoistureSensor = SoilMoistureSensor()
+        except ImportError:
+            self.soilMoistureSensor = None
+
         disable_access_point()
         do_connect(WLAN_SSID, WLAN_PASSWORD)
 
@@ -42,6 +48,10 @@ class App:
             temperature, humidity = self.sensor.measure()
             data['temperature'] = temperature
             data['humidity'] = humidity
+
+        if self.soilMoistureSensor:
+            soilMoisture = self.soilMoistureSensor.readValue()
+            data.update(soilMoisture)
 
         if self.ntptimeWhenZero <= 0:
             ntptime.settime()
