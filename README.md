@@ -71,6 +71,12 @@ ampy run test_wlan.py
 ampy run test_logstash.py
 ```
 
+#### Serial console
+
+```
+miniterm.py --raw /dev/ttyUSB0 115200
+```
+
 ## Acknowledgements
 
 * sht30.py is taken from here: https://github.com/rsc1975/micropython-sht30
