@@ -41,6 +41,7 @@ ampy put bmp180.py
 ampy put config.py
 ampy put logstash.py
 ampy put wlan.py
+ampy put app.py
 ampy put main.py
 ```
 

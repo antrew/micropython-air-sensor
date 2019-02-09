@@ -14,3 +14,7 @@ def do_connect(ssid, password):
     sta_if = network.WLAN(network.STA_IF)
     sta_if.active(True)
     sta_if.connect(ssid, password)
+
+
+def disable_access_point():
+    network.WLAN(network.AP_IF).active(False)
