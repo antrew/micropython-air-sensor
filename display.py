@@ -2,6 +2,7 @@ import ssd1306
 from machine import I2C, Pin
 import utime
 
+
 class Display:
     def __init__(self):
         self.i2c = I2C(-1, Pin(5), Pin(4))
@@ -15,27 +16,31 @@ class Display:
             print('Error initializing display', e)
             print('i2c devices:', self.i2c.scan())
 
-    def refresh(self, temperature, humidity):
+    def refresh(self, display_lines):
         if not self.display:
             self.try_init()
         if not self.display:
             return
         t = utime.localtime()
         self.display.fill(0)
-        self.display.text('{:02d}:{:02d}:{:02d}'.format(t[3], t[4], t[5]), 0,0)
-        self.display.text('T  {0:.1f}'.format(temperature), 0,8)
-        self.display.text('RH {0:.1f}'.format(humidity), 0,16)
+        self.display.text('{:02d}:{:02d}:{:02d}'.format(t[3], t[4], t[5]), 0, 0)
+        offset_y = 8
+        for line in display_lines:
+            self.display.text(line, 0, offset_y)
+            offset_y += 8
         try:
             self.display.show()
         except Exception as e:
             print('Error showing display', e)
 
+
 if __name__ == '__main__':
     import ntptime
     import time
+
     ntptime.settime()
     # print('Hello!')
     display = Display()
     for _ in range(5):
-        display.refresh(23.8464, 36.0967)
+        display.refresh(['T 23.8464', 'RH 36.0967'])
         time.sleep(1)
