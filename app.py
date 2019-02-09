@@ -41,6 +41,13 @@ class App:
         except ImportError:
             self.soilMoistureSensor = None
 
+        try:
+            from mhz19 import MHZ19
+            self.mhz19 = MHZ19()
+            self.mhz19.start()
+        except ImportError:
+            self.mhz19 = None
+
         disable_access_point()
         do_connect(WLAN_SSID, WLAN_PASSWORD)
 
@@ -50,14 +57,23 @@ class App:
         data = {
             'device_id': self.device_id,
         }
+        display_lines = []
         if self.sensor:
             temperature, humidity = self.sensor.measure()
             data['temperature'] = temperature
             data['humidity'] = humidity
+            display_lines.append('T  {0:.1f}°C'.format(temperature))
+            display_lines.append('RH {0:.1f}%'.format(humidity))
 
         if self.soilMoistureSensor:
             soilMoisture = self.soilMoistureSensor.readValue()
             data.update(soilMoisture)
+
+        if self.mhz19:
+            co2 = self.mhz19.getCo2()
+            if co2:
+                data['co2'] = co2
+                display_lines.append('CO2 {}'.format(co2))
 
         if self.ntptimeWhenZero <= 0:
             ntptime.settime()
@@ -65,7 +81,7 @@ class App:
         self.ntptimeWhenZero -= 1
 
         if self.display:
-            self.display.refresh(temperature, humidity)
+            self.display.refresh(display_lines)
         send_data_to_logstash(LOGSTASH_URL, data)
 
     def run(self):
@@ -78,4 +94,5 @@ if __name__ == '__main__':
     print('running once')
     # run once
     app = App()
+    utime.sleep(5)
     app.loop()
