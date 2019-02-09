@@ -10,6 +10,7 @@ class Display:
         self.try_init()
 
     def try_init(self):
+        print('try_init i2c devices:', self.i2c.scan())
         try:
             self.display = ssd1306.SSD1306_I2C(64, 48, self.i2c, addr=0x3c)
         except Exception as e:
@@ -17,6 +18,7 @@ class Display:
             print('i2c devices:', self.i2c.scan())
 
     def refresh(self, display_lines):
+        print('refresh i2c devices:', self.i2c.scan())
         if not self.display:
             self.try_init()
         if not self.display:
