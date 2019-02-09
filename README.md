@@ -31,18 +31,26 @@ http://docs.micropython.org/en/latest/esp8266/esp8266/tutorial/intro.html
 ### Uploading scripts
 
 1. Set your WLAN SSID and password in config.py
-2. Run the following commands to upload the scripts from this repository to your MicroPython board:
+2. Upload base scripts to your MicroPython board:
 
 ```bash
 # modify the path to the USB serial port if necessary
 export AMPY_PORT=/dev/ttyUSB0
-ampy put sht30.py
-ampy put bmp180.py
 ampy put config.py
 ampy put logstash.py
 ampy put wlan.py
 ampy put app.py
 ampy put main.py
+```
+
+3. Upload optional modules (only those that are actually connected):
+
+```bash
+ampy put sht30.py
+ampy put bmp180.py
+ampy put display.py
+ampy put mhz19.py
+ampy put moisture.py
 ```
 
 ### Testing parts
