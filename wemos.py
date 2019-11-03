@@ -11,6 +11,7 @@ D7 = 13  # GPIO, SPI MOSI (Master out, Slave in)
 D8 = 15  # GPIO, SPI SS (Slave select
 
 # A0 = A0 # Analog in, via ADC
+A0 = 0
 
 RX = 3  # Receive
 TX = 1  # Transmit
