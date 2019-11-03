@@ -1,6 +1,6 @@
 # pin mapping for WeMos D1 mini
 
-D0 = 16  # GPIO
+D0 = 16  # GPIO, wake up
 D1 = 5  # GPIO, I2C SCL
 D2 = 4  # GPIO, I2C SDA
 D3 = 0  # GPIO
@@ -14,3 +14,7 @@ D8 = 15  # GPIO, SPI SS (Slave select
 
 RX = 3  # Receive
 TX = 1  # Transmit
+
+# used for flashing:
+#GPIO0, GPIO2 and GPIO15
+#  D3     D4         D8
