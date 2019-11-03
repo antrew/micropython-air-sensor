@@ -30,6 +30,12 @@ class App:
             self.display = None
 
         try:
+            from epaper import Epaper
+            self.epaper = Epaper()
+        except ImportError:
+            self.epaper = None
+
+        try:
             from sht30 import SHT30
             self.sensor = SHT30()
         except ImportError:
@@ -83,6 +89,10 @@ class App:
 
         if self.display:
             self.display.refresh(display_lines)
+
+        if self.epaper:
+            self.epaper.refresh(display_lines)
+
         send_data_to_logstash(LOGSTASH_URL, data)
 
     def run(self):

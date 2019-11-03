@@ -49,6 +49,7 @@ ampy put main.py
 ampy put sht30.py
 ampy put bmp180.py
 ampy put display.py
+ampy put epaper.py
 ampy put mhz19.py
 ampy put moisture.py
 ```

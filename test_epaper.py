@@ -18,6 +18,8 @@ CS_PIN = D0
 DC_PIN = D1
 RST_PIN = D2
 BUSY_PIN = D3
+# SCLK -> SPI SCK  (D5)
+# SDI  -> SPI MOSI (D7)
 
 # spi = SPI(3, SPI.MASTER, baudrate=2000000, polarity=0, phase=0)
 # hardware SPI on ESP8266
@@ -42,5 +44,6 @@ black = 0
 white = 1
 fb.fill(white)
 fb.text('Hello World!', 16, 0, black)
+fb.text('JENYA IS MY BUSECHKA', 16, 16, black)
 display.set_frame_memory(buf, 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT)
 display.display_frame()
