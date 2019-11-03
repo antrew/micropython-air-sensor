@@ -1,6 +1,7 @@
 import esp
 import ntptime
 import utime
+import machine
 
 import config
 from config import WLAN_SSID, WLAN_PASSWORD, LOGSTASH_URL
@@ -51,7 +52,8 @@ class App:
         disable_access_point()
         do_connect(WLAN_SSID, WLAN_PASSWORD)
 
-        self.ntptimeWhenZero = 0
+        ntptime.settime()
+        self.ntptimeWhenZero = 10
 
     def loop(self):
         data = {
@@ -89,10 +91,21 @@ class App:
             self.loop()
             utime.sleep(self.sendIntervalSeconds)
 
+    def deepsleep(self):
+        # configure RTC.ALARM0 to be able to wake the device
+        rtc = machine.RTC()
+        rtc.irq(trigger=rtc.ALARM0, wake=machine.DEEPSLEEP)
+
+        # set RTC.ALARM0 to fire after 10 seconds (waking the device)
+        rtc.alarm(rtc.ALARM0, self.sendIntervalSeconds * 1000)
+
+        # put the device to sleep
+        print('Going to deep sleep for {} seconds'.format(self.sendIntervalSeconds))
+        machine.deepsleep()
+
 
 if __name__ == '__main__':
     print('running once')
     # run once
     app = App()
-    utime.sleep(5)
     app.loop()
