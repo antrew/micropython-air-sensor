@@ -8,6 +8,11 @@ print('Done sleeping. Continuing execution.')
 
 from app import App
 
-app = App()
-app.loop()
-app.deepsleep()
+try:
+    app = App()
+    app.init()
+    app.loop()
+except Exception as exception:
+    print('Error initializing or looping', exception)
+finally:
+    app.deepsleep()

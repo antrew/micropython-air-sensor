@@ -12,8 +12,7 @@ DEFAULT_SEND_INTERVAL_SECONDS = 60
 
 
 class App:
-    def __init__(self):
-
+    def init(self):
         if hasattr(config, 'DEVICE_ID'):
             self.device_id = config.DEVICE_ID
         else:
