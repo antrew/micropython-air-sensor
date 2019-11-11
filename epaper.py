@@ -59,7 +59,6 @@ class Epaper:
         white = 1
         fb.fill(white)
         fb.text('Hello World!', 16, 0 * self.LINE_HEIGHT, black)
-        fb.text('JENYA IS MY BUSECHKA', 16, 1 * self.LINE_HEIGHT, black)
 
         fb.text('{:02d}:{:02d}:{:02d}'.format(t[3], t[4], t[5]), 0, 2 * self.LINE_HEIGHT, black)
         offset_y = 3 * self.LINE_HEIGHT

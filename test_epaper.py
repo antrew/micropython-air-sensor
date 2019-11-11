@@ -44,6 +44,5 @@ black = 0
 white = 1
 fb.fill(white)
 fb.text('Hello World!', 16, 0, black)
-fb.text('JENYA IS MY BUSECHKA', 16, 16, black)
 display.set_frame_memory(buf, 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT)
 display.display_frame()
