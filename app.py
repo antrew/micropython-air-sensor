@@ -4,8 +4,7 @@ import utime
 import machine
 
 import config
-from config import WLAN_SSID, WLAN_PASSWORD, LOGSTASH_URL
-from logstash import send_data_to_logstash
+from config import WLAN_SSID, WLAN_PASSWORD
 from wlan import do_connect, disable_access_point
 
 DEFAULT_SEND_INTERVAL_SECONDS = 60
@@ -22,6 +21,12 @@ class App:
             self.sendIntervalSeconds = config.SEND_INTERVAL_SECONDS
         else:
             self.sendIntervalSeconds = DEFAULT_SEND_INTERVAL_SECONDS
+
+        try:
+            from logstash import Logstash
+            self.logstash = Logstash()
+        except ImportError:
+            self.logstash = None
 
         try:
             from display import Display
@@ -93,7 +98,8 @@ class App:
         if self.epaper:
             self.epaper.refresh(display_lines)
 
-        send_data_to_logstash(LOGSTASH_URL, data)
+        if self.logstash:
+            self.logstash.send_data(data)
 
     def run(self):
         while True:
