@@ -37,7 +37,6 @@ http://docs.micropython.org/en/latest/esp8266/esp8266/tutorial/intro.html
 # modify the path to the USB serial port if necessary
 export AMPY_PORT=/dev/ttyUSB0
 ampy put config.py
-ampy put logstash.py
 ampy put wlan.py
 ampy put module.py
 ampy put app.py
@@ -47,6 +46,8 @@ ampy put main.py
 3. Upload optional modules (only those that are actually connected):
 
 ```bash
+ampy put wemos.py
+ampy put logstash.py
 ampy put sht30.py
 ampy put bmp180.py
 ampy put display.py
