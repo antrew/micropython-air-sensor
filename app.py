@@ -9,7 +9,10 @@ from wlan import do_connect, disable_access_point
 
 DEFAULT_SEND_INTERVAL_SECONDS = 60
 
-MODULES = ['battery.Battery']
+MODULES = [
+    'battery.Battery',
+    'moisture32.Moisture',
+]
 
 
 class App:
