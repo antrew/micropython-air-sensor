@@ -39,6 +39,7 @@ export AMPY_PORT=/dev/ttyUSB0
 ampy put config.py
 ampy put logstash.py
 ampy put wlan.py
+ampy put module.py
 ampy put app.py
 ampy put main.py
 ```

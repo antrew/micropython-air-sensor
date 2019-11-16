@@ -1,13 +1,17 @@
+import importlib
+
 import esp
+import machine
 import ntptime
 import utime
-import machine
 
 import config
 from config import WLAN_SSID, WLAN_PASSWORD
 from wlan import do_connect, disable_access_point
 
 DEFAULT_SEND_INTERVAL_SECONDS = 60
+
+MODULES = ['battery']
 
 
 class App:
@@ -21,6 +25,15 @@ class App:
             self.sendIntervalSeconds = config.SEND_INTERVAL_SECONDS
         else:
             self.sendIntervalSeconds = DEFAULT_SEND_INTERVAL_SECONDS
+
+        self.loadedModules = []
+        for moduleName in MODULES:
+            print('Trying to import module ' + moduleName)
+            try:
+                Module = importlib.import_module(moduleName)
+                self.loadedModules.append(Module())
+            except ImportError as error:
+                print("Module {} could not be imported".format(moduleName))
 
         try:
             from logstash import Logstash
@@ -70,6 +83,13 @@ class App:
             'device_id': self.device_id,
         }
         display_lines = []
+
+        for module in self.loadedModules:
+            moduleData = module.readValue()
+            moduleDisplayLines = module.getDisplayLines(moduleData)
+            data.update(moduleData)
+            display_lines.extend(moduleDisplayLines)
+
         if self.sensor:
             temperature, humidity = self.sensor.measure()
             data['temperature'] = temperature
