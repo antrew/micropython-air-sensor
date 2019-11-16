@@ -1,5 +1,3 @@
-import importlib
-
 import esp
 import machine
 import ntptime
@@ -11,7 +9,7 @@ from wlan import do_connect, disable_access_point
 
 DEFAULT_SEND_INTERVAL_SECONDS = 60
 
-MODULES = ['battery']
+MODULES = ['battery.Battery']
 
 
 class App:
@@ -30,8 +28,12 @@ class App:
         for moduleName in MODULES:
             print('Trying to import module ' + moduleName)
             try:
-                Module = importlib.import_module(moduleName)
-                self.loadedModules.append(Module())
+                [packageName, className] = moduleName.split('.')
+                package = __import__(packageName)
+                ModuleClass = getattr(package, className)
+                module = ModuleClass()
+                self.loadedModules.append(module)
+                print('Imported module ' + moduleName)
             except ImportError as error:
                 print("Module {} could not be imported".format(moduleName))
 
