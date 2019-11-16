@@ -3,6 +3,7 @@ from machine import ADC
 from module import Module
 from wemos import A0
 
+# GND -[100k]- ADC -[220k]- A0 -[1000]- BAT+
 # all values in kOhm
 RESISTOR_GND_ADC = 100
 RESISTOR_ADC_A0 = 220
