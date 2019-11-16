@@ -1,7 +1,9 @@
-import epaper1in54
-from machine import SPI, Pin
 import framebuf
 import utime
+from machine import SPI, Pin
+
+import epaper1in54
+from wemos import D1, D2, D6, D8
 
 
 class Epaper:
@@ -10,22 +12,11 @@ class Epaper:
         self.try_init()
 
     def try_init(self):
-        # WeMos to Micropython ping mapping
-        D0 = 16
-        D1 = 5
-        D2 = 4
-        D3 = 0
-        D4 = 2
-        D5 = 14  # SPI SCK
-        D6 = 12  # SPI MISO
-        D7 = 13  # SPI MOSI
-        D8 = 15  # Slave select
-
         # ePaper
-        CS_PIN = D0
+        CS_PIN = D2
         DC_PIN = D1
-        RST_PIN = D2
-        BUSY_PIN = D3
+        RST_PIN = D8
+        BUSY_PIN = D6
         # SCLK -> SPI SCK  (D5)
         # SDI  -> SPI MOSI (D7)
 
