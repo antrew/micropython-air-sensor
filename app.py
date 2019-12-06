@@ -1,4 +1,5 @@
 import esp
+import uos
 import machine
 import ntptime
 import utime
@@ -132,16 +133,22 @@ class App:
             utime.sleep(self.sendIntervalSeconds)
 
     def deepsleep(self):
-        # configure RTC.ALARM0 to be able to wake the device
-        rtc = machine.RTC()
-        rtc.irq(trigger=rtc.ALARM0, wake=machine.DEEPSLEEP)
-
-        # set RTC.ALARM0 to fire after 10 seconds (waking the device)
-        rtc.alarm(rtc.ALARM0, self.sendIntervalSeconds * 1000)
-
-        # put the device to sleep
         print('Going to deep sleep for {} seconds'.format(self.sendIntervalSeconds))
-        machine.deepsleep()
+        if uos.uname().sysname == 'esp32':
+            # ESP32
+            machine.deepsleep(self.sendIntervalSeconds * 1000)
+        else:
+            # ESP8266
+
+            # configure RTC.ALARM0 to be able to wake the device
+            rtc = machine.RTC()
+            rtc.irq(trigger=rtc.ALARM0, wake=machine.DEEPSLEEP)
+
+            # set RTC.ALARM0 to fire after 10 seconds (waking the device)
+            rtc.alarm(rtc.ALARM0, self.sendIntervalSeconds * 1000)
+
+            # put the device to sleep
+            machine.deepsleep()
 
 
 if __name__ == '__main__':
