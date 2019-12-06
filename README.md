@@ -93,3 +93,9 @@ miniterm.py --raw /dev/ttyUSB0 115200
 * sht30.py is taken from here: https://github.com/rsc1975/micropython-sht30
 * bmp180.py is taken from here: https://github.com/micropython-IMU/micropython-bmp180
 * urequests.py is taken from here: https://github.com/micropython/micropython-lib
+
+
+
+https://github.com/micropython/micropython/blob/master/drivers/display/ssd1306.py
+wget https://raw.githubusercontent.com/micropython/micropython/master/drivers/display/ssd1306.py
+ampy put ssd1306.py
