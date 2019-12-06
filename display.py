@@ -5,14 +5,14 @@ import utime
 
 class Display:
     def __init__(self):
-        self.i2c = I2C(-1, Pin(5), Pin(4))
+        self.i2c = I2C(-1, Pin(4), Pin(5))
         self.display = None
         self.try_init()
 
     def try_init(self):
         print('try_init i2c devices:', self.i2c.scan())
         try:
-            self.display = ssd1306.SSD1306_I2C(64, 48, self.i2c, addr=0x3c)
+            self.display = ssd1306.SSD1306_I2C(128, 64, self.i2c, addr=0x3c)
         except Exception as e:
             print('Error initializing display', e)
             print('i2c devices:', self.i2c.scan())
@@ -40,8 +40,7 @@ if __name__ == '__main__':
     import ntptime
     import time
 
-    ntptime.settime()
-    # print('Hello!')
+    print('Hello!')
     display = Display()
     for _ in range(5):
         display.refresh(['T 23.8464', 'RH 36.0967'])
